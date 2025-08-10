@@ -1,0 +1,38 @@
+# Docker Profile Configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/var_calculator
+    username: var_user
+    password: var_password
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+# Logging for Docker
+logging:
+  level:
+    com.riskmanagement.varcalculator: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
+  file:
+    name: logs/var-calculator-docker.log
+
+# VaR Calculator Docker Settings
+var-calculator:
+  price-data:
+    alpha-vantage:
+      api-key: ${ALPHA_VANTAGE_API_KEY:demo}
+      rate-limit-per-minute: 5
+
+  reports:
+    output-directory: /app/reports
+
+  scheduler:
+    daily-var-calculation:
+      enabled: true
